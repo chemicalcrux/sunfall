@@ -28,23 +28,29 @@ public class ObstacleSpawner : MonoBehaviour
     {
         int index = UnityEngine.Random.Range(0, courseSet.courses.Count);
         var course = courseSet.courses[index];
-        var obj = Instantiate(course);
+        int repetitions = UnityEngine.Random.Range(course.repetitions.x, course.repetitions.y + 1);
+        for (int copy = 0; copy < repetitions; copy++) {
+            var obj = Instantiate(course);
 
-        offset += course.frontBuffer;
+            offset += course.frontBuffer;
 
-        Debug.Log(course.frontBuffer + " " + offset);
+            float furthest = offset;
 
-        float furthest = offset;
+            for (int i = 0; i < obj.transform.childCount; i++) {
+                furthest = Mathf.Max(offset + obj.transform.GetChild(i).transform.localPosition.z, furthest);
+            }
 
-        for (int i = 0; i < obj.transform.childCount; i++) {
-            furthest = Mathf.Max(offset + obj.transform.GetChild(i).transform.localPosition.z, furthest);
+            Vector3 horizOffset = UnityEngine.Random.Range(course.horizontalLimits.x, course.horizontalLimits.y) * Vector3.right;
+
+            while (obj.transform.childCount > 0) {
+                var child = obj.transform.GetChild(0);
+                pivot.Attach(child, offset, child.transform.localPosition + horizOffset);
+            }
+
+            offset = furthest + course.backBuffer;
         }
 
-        while (obj.transform.childCount > 0) {
-            var child = obj.transform.GetChild(0);
-            pivot.Attach(child, offset, child.transform.localPosition);
-        }
 
-        return furthest + course.backBuffer;
+        return offset;
     }
 }

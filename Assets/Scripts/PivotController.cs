@@ -76,7 +76,7 @@ public class PivotController : MonoBehaviour
         }
         cylinder.material.SetFloat("_Integrity", Mathf.Clamp01(collapseTimer / 2));
 
-        float t = Mathf.Clamp01(Mathf.InverseLerp(0, 10, Mathf.Sqrt(collapseTimer)));
+        float t = Mathf.Clamp01(Mathf.InverseLerp(0, 10, Mathf.Pow(collapseTimer, 2f)));
 
         previewRingTransform.rotation = Quaternion.Slerp(nextLevelRotationStart, transform.rotation, 1 - t);
     }
@@ -97,8 +97,8 @@ public class PivotController : MonoBehaviour
         {
             if (obstacleKillTimes[obj] >= collapseTimer)
             {
-                KillObstacle(obj);
                 obstacleKillTimes.Remove(obj);
+                KillObstacle(obj);
             }
 
         }

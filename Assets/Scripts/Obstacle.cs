@@ -17,7 +17,7 @@ public class Obstacle : MonoBehaviour {
             return;
 
         passed = true;
-        float distance = safeColliders.Select(collider => (collider.ClosestPoint(Camera.main.transform.position) - Camera.main.transform.position).magnitude).Min();
+        float distance = safeColliders.Concat(deadlyColliders).Select(collider => (collider.ClosestPoint(Camera.main.transform.position) - Camera.main.transform.position).magnitude).Min();
 
         impulseSource.GenerateImpulseWithForce(10f / distance);
         whooshSource.Play();

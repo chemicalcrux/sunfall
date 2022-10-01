@@ -105,5 +105,6 @@ public class Player : MonoBehaviour
 
     public void Kill() {
         dead = true;
+        sfx.Crash();
     }
 }

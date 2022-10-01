@@ -6,6 +6,7 @@ public class PlayerSFX : MonoBehaviour
 {
     private AudioSource source;
     public AudioClip slam;
+    public AudioClip crash;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,11 +16,16 @@ public class PlayerSFX : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void Slam()
     {
         source.PlayOneShot(slam);
+    }
+
+    public void Crash()
+    {
+        source.PlayOneShot(crash);
     }
 }
