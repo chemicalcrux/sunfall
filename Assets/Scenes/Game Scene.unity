@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 5.39291, g: 6.5046883, b: 10.989853, a: 1}
+  m_IndirectSpecularColor: {r: 5.4384956, g: 6.5066223, b: 10.867416, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -170,7 +170,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 3000
-  linearSpeed: 50
+  ringTransform: {fileID: 2136234165}
+  linearSpeed: 400
   axis: {x: 1, y: 0, z: 0}
 --- !u!114 &1723664
 MonoBehaviour:
@@ -184,8 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70ff92697f61242d5964291a4179c92d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstacle: {fileID: 4047486086904572812, guid: 91b67e745b08f420dbdd1b54bb5de7d0,
-    type: 3}
+  course: {fileID: 4481452002719407199, guid: 8c4d7c247ff75454099e2059b7612435, type: 3}
   obstacleOffset: 0.2
 --- !u!1 &308788766
 GameObject:
@@ -563,9 +563,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81ea541f8bebe47f19510228f76fca65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pivot: {fileID: 1723663}
   speed: 10
   accel: 0.3
   decel: 0.3
+  fallSpeed: 50
 --- !u!54 &742388359
 Rigidbody:
   m_ObjectHideFlags: 0
