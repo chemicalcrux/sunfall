@@ -14,7 +14,6 @@ public class ObstacleSpawner : MonoBehaviour
     void Start()
     {
         pivot = GetComponent<PivotController>();
-        InvokeRepeating(nameof(SpawnCourse), 5.0f, 5.0f);
     }
 
     // Update is called once per frame
@@ -23,14 +22,22 @@ public class ObstacleSpawner : MonoBehaviour
         
     }
     
-    void SpawnCourse()
+    // Returns the amount of space taken up
+    public float SpawnCourse(float offset)
     {
         var obj = Instantiate(course);
 
-        while (obj.transform.childCount > 0) {
-            var child = obj.transform.GetChild(0);
-            pivot.Attach(child, obstacleOffset, child.transform.localPosition);
+        float furthest = offset;
+
+        for (int i = 0; i < obj.transform.childCount; i++) {
+            furthest = Mathf.Max(offset + obj.transform.GetChild(i).transform.localPosition.z, furthest);
         }
 
+        while (obj.transform.childCount > 0) {
+            var child = obj.transform.GetChild(0);
+            pivot.Attach(child, offset, child.transform.localPosition);
+        }
+
+        return furthest;
     }
 }

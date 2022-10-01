@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Cinemachine;
 
 public class Player : MonoBehaviour
 {
@@ -21,10 +22,12 @@ public class Player : MonoBehaviour
     public float GoalHeight => pivot.radius + 25f;
     public bool Falling => Mathf.Abs(Height - GoalHeight) > 0.1f;
 
+    private CinemachineImpulseSource impulseSource;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
     // Update is called once per frame
@@ -55,6 +58,9 @@ public class Player : MonoBehaviour
         if (Falling) {
             fallVelocity = Mathf.MoveTowards(fallVelocity, fallSpeed, Time.deltaTime * 25f);
         } else {
+            if (fallVelocity > 0) {
+                Impact(fallVelocity);
+            }
             fallVelocity = 0f;
         }
 
@@ -69,5 +75,16 @@ public class Player : MonoBehaviour
     public void Horizontal(InputAction.CallbackContext context)
     {
         horizInput = context.ReadValue<float>();
+    }
+
+    public void Impact(float impactSpeed)
+    {
+        Debug.Log("Boom " + impactSpeed);
+        impulseSource.GenerateImpulseWithVelocity(Vector3.down * impactSpeed);
+    }
+
+    public void NearMiss(float distance)
+    {
+        impulseSource.GenerateImpulseWithForce(25f / distance);
     }
 }

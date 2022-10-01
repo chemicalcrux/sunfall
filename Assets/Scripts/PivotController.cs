@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 public class PivotController : MonoBehaviour
 {
     public float radius = 1000f;
@@ -10,8 +11,14 @@ public class PivotController : MonoBehaviour
     public float linearSpeed = 10f;
     float AngularSpeed => -linearSpeed / Mathf.PI / 2 / radius;
     public Vector3 axis = new Vector3(1, 0, 0);
+
+    public float collapseTimer = 10f;
     
     private Transform holder;
+
+    public CinemachineImpulseSource rumbleSource;
+
+    public ObstacleSpawner obstacleSpawner;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +29,11 @@ public class PivotController : MonoBehaviour
         holder.position = Vector3.zero;
         holder.rotation = Quaternion.identity;
         holder.localScale = Vector3.one;
+
+        InvokeRepeating(nameof(CollapseWarning), 0.5f, 0.5f);
+        ringTransform.localScale = new Vector3(500, radius, radius);
+
+        obstacleSpawner = GetComponent<ObstacleSpawner>();
     }
 
     public void OnGUI()
@@ -35,12 +47,25 @@ public class PivotController : MonoBehaviour
     void Update()
     {
         transform.rotation *= Quaternion.AngleAxis(360f * Time.deltaTime * AngularSpeed, axis);
+
+        collapseTimer -= Time.deltaTime;
+
+        if (collapseTimer <= 0) {
+            Collapse();
+        }
     }
 
+    void CollapseWarning()
+    {
+        if (collapseTimer < 3f) {
+            float force = (3f - collapseTimer) * 10f;
+            rumbleSource.GenerateImpulseWithForce(force);
+        }
+    }
     public void Collapse()
     {
-        radius -= 300f;
-        ringTransform.localScale = new Vector3(radius/6, radius, radius);
+        radius -= 750f;
+        ringTransform.localScale = new Vector3(500, radius, radius);
         
         for (int i = 0; i < holder.childCount; i++) {
             var child = holder.GetChild(i).gameObject;
@@ -51,19 +76,24 @@ public class PivotController : MonoBehaviour
         }
 
         holder.DetachChildren();
+
+        collapseTimer = 10f;
+
+        float offset = obstacleSpawner.SpawnCourse(0);
+        offset = obstacleSpawner.SpawnCourse(offset);
+        offset = obstacleSpawner.SpawnCourse(offset);
+        offset = obstacleSpawner.SpawnCourse(offset);
     }
 
-    public void Attach(Transform targetTransform, float turnOffset, Vector3 position)
+    public void Attach(Transform targetTransform, float distance, Vector3 position)
     {
         targetTransform.SetParent(holder);
         
-        // turnOffset = 0 would drop it right on top of the player!
-
-        float angle = 90f - turnOffset * 360f;
+        float angle = 90f;
 
         // next up: angle from the object's Z position
 
-        angle -= 360f * position.z / Mathf.PI / 2 / radius;
+        angle -= 360f * (distance + position.z) / Mathf.PI / 2 / radius;
 
         float offsetY = radius * Mathf.Sin(Mathf.Deg2Rad * angle);
         float offsetZ = radius * Mathf.Cos(Mathf.Deg2Rad * angle);
