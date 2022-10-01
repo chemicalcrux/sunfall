@@ -7,6 +7,7 @@ using UnityEngine.VFX;
 
 public class Player : MonoBehaviour
 {
+    public PlayerSFX sfx;
     public PivotController pivot;
     public float speed = 5f;
     public float accel = 0.5f;
@@ -24,13 +25,14 @@ public class Player : MonoBehaviour
     public bool Falling => Mathf.Abs(Height - GoalHeight) > 0.1f;
     public bool dead = false;
 
-    private CinemachineImpulseSource impulseSource;
+    public CinemachineImpulseSource normalImpulse;
+    public CinemachineImpulseSource heavyImpulse;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        impulseSource = GetComponent<CinemachineImpulseSource>();
+
     }
 
     // Update is called once per frame
@@ -80,13 +82,13 @@ public class Player : MonoBehaviour
 
     public void Impact(float impactSpeed)
     {
-        Debug.Log("Boom " + impactSpeed);
-        impulseSource.GenerateImpulseWithVelocity(Vector3.down * impactSpeed);
+        sfx.Slam();        
+        heavyImpulse.GenerateImpulseWithVelocity(Vector3.down * impactSpeed);
     }
 
     public void NearMiss(float distance)
     {
-        impulseSource.GenerateImpulseWithForce(25f / distance);
+        heavyImpulse.GenerateImpulseWithForce(25f / distance);
     }
 
     public void OnTriggerEnter(Collider other) {

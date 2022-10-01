@@ -7,7 +7,8 @@ public class ObstacleSpawner : MonoBehaviour
 {
     private PivotController pivot;
 
-    public GameObject course;
+    public CourseCollection courseSet;
+
     [Range (0f, 1f)]
     public float obstacleOffset = 0.2f;
     // Start is called before the first frame update
@@ -25,7 +26,13 @@ public class ObstacleSpawner : MonoBehaviour
     // Returns the amount of space taken up
     public float SpawnCourse(float offset)
     {
+        int index = UnityEngine.Random.Range(0, courseSet.courses.Count);
+        var course = courseSet.courses[index];
         var obj = Instantiate(course);
+
+        offset += course.frontBuffer;
+
+        Debug.Log(course.frontBuffer + " " + offset);
 
         float furthest = offset;
 
@@ -38,6 +45,6 @@ public class ObstacleSpawner : MonoBehaviour
             pivot.Attach(child, offset, child.transform.localPosition);
         }
 
-        return furthest;
+        return furthest + course.backBuffer;
     }
 }

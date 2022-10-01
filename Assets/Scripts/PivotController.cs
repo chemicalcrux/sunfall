@@ -7,6 +7,7 @@ public class PivotController : MonoBehaviour
 {
     public float radius = 1000f;
     public Transform ringTransform;
+    public Transform previewRingTransform;
 
     [Range(0f, 1000f)]
     public float linearSpeed = 10f;
@@ -23,6 +24,10 @@ public class PivotController : MonoBehaviour
 
     private Dictionary<GameObject, float> obstacleKillTimes = new();
 
+    public MeshRenderer cylinder;
+
+    private Quaternion nextLevelRotationStart;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,9 +39,17 @@ public class PivotController : MonoBehaviour
         holder.localScale = Vector3.one;
 
         InvokeRepeating(nameof(CollapseWarning), 0.5f, 0.5f);
-        ringTransform.localScale = new Vector3(500, radius, radius);
+
+        ConfigureRings();
 
         obstacleSpawner = GetComponent<ObstacleSpawner>();
+    }
+
+    private void ConfigureRings()
+    {
+        ringTransform.localScale = new Vector3(500, radius, radius);
+        previewRingTransform.localScale = new Vector3(500, radius - 750, radius - 750);
+        nextLevelRotationStart = UnityEngine.Random.rotationUniform;
     }
 
     public void OnGUI()
@@ -51,7 +64,6 @@ public class PivotController : MonoBehaviour
     void Update()
     {
         transform.rotation *= Quaternion.AngleAxis(360f * Time.deltaTime * AngularSpeed, axis);
-
         collapseTimer -= Time.deltaTime;
 
         if (collapseTimer <= 3f)
@@ -62,14 +74,18 @@ public class PivotController : MonoBehaviour
         {
             Collapse();
         }
+        cylinder.material.SetFloat("_Integrity", Mathf.Clamp01(collapseTimer / 2));
 
+        float t = Mathf.Clamp01(Mathf.InverseLerp(0, 10, Mathf.Sqrt(collapseTimer)));
+
+        previewRingTransform.rotation = Quaternion.Slerp(nextLevelRotationStart, transform.rotation, 1 - t);
     }
 
     void CollapseWarning()
     {
-        if (collapseTimer < 3f)
+        if (collapseTimer < 2f)
         {
-            float force = (3f - collapseTimer) * 10f;
+            float force = (2f - collapseTimer) * 10f;
             rumbleSource.GenerateImpulseWithForce(force);
         }
     }
@@ -95,17 +111,19 @@ public class PivotController : MonoBehaviour
         flyAway.lifetime = 3f;
         flyAway.acceleration = 200f;
         obstacle.transform.parent = null;
+        obstacle.GetComponent<Obstacle>().Kill();
     }
 
     public void Collapse()
     {
         radius -= 750f;
-        ringTransform.localScale = new Vector3(500, radius, radius);
 
+        ConfigureRings();
         for (int i = 0; i < holder.childCount; i++)
         {
             var child = holder.GetChild(i).gameObject;
             KillObstacle(child);
+            obstacleKillTimes.Remove(child);
         }
 
         holder.DetachChildren();
@@ -147,6 +165,6 @@ public class PivotController : MonoBehaviour
         targetTransform.transform.position = offsetPos;
         targetTransform.transform.rotation = Quaternion.AngleAxis(90f - angle, axis);
 
-        obstacleKillTimes[targetTransform.gameObject] = UnityEngine.Random.Range(1.5f, 3f);
+        obstacleKillTimes[targetTransform.gameObject] = UnityEngine.Random.Range(1f, 2.5f);
     }
 }

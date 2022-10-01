@@ -9,10 +9,11 @@ public class FlyAway : MonoBehaviour
     private float speed = 100f;
 
     private Quaternion rotationSpeed = Quaternion.identity;
+    private new MeshRenderer renderer;
 
     void Start()
     {
-
+        renderer = GetComponentInChildren<MeshRenderer>();
     }
     void Update()
     {
@@ -23,6 +24,8 @@ public class FlyAway : MonoBehaviour
 
         rotationSpeed *= Quaternion.Slerp(Quaternion.identity, UnityEngine.Random.rotationUniform, 0.1f * Time.deltaTime);
         transform.rotation *= rotationSpeed;
+
+        renderer.material.SetFloat("_Integrity", lifetime / 3);
 
         if (lifetime <= 0) {
             Destroy(gameObject);
