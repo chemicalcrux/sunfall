@@ -10,6 +10,10 @@ public class FlyAway : MonoBehaviour
 
     private Quaternion rotationSpeed = Quaternion.identity;
 
+    void Start()
+    {
+
+    }
     void Update()
     {
         speed += acceleration * Time.deltaTime;

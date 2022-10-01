@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
+using UnityEngine.VFX;
 
 public class Player : MonoBehaviour
 {
@@ -21,8 +22,10 @@ public class Player : MonoBehaviour
     public float Height => transform.position.y - pivot.transform.position.y;
     public float GoalHeight => pivot.radius + 25f;
     public bool Falling => Mathf.Abs(Height - GoalHeight) > 0.1f;
+    public bool dead = false;
 
     private CinemachineImpulseSource impulseSource;
+
 
     // Start is called before the first frame update
     void Start()
@@ -49,8 +52,6 @@ public class Player : MonoBehaviour
         
         velocity = Vector3.MoveTowards(velocity, target, rate);
 
-        transform.position += velocity;
-
         float tilt = -45f * MathfExt.Logistic(velocity.x / speed, 1f);
 
         transform.rotation = Quaternion.AngleAxis(tilt, Vector3.forward);
@@ -64,7 +65,7 @@ public class Player : MonoBehaviour
             fallVelocity = 0f;
         }
 
-        transform.position += Vector3.down * fallVelocity;
+        transform.position += velocity + Vector3.down * fallVelocity;
 
         if (Height < GoalHeight) {
             transform.position += Vector3.up * (GoalHeight - Height);
@@ -86,5 +87,21 @@ public class Player : MonoBehaviour
     public void NearMiss(float distance)
     {
         impulseSource.GenerateImpulseWithForce(25f / distance);
+    }
+
+    public void OnTriggerEnter(Collider other) {
+        if (LayerMask.NameToLayer("Obstacle") != other.gameObject.layer)
+            return;
+
+        Obstacle obstacle = other.gameObject.GetComponentInParent<Obstacle>();
+        
+        if (obstacle == null)
+            return;
+
+        Kill();
+    }
+
+    public void Kill() {
+        dead = true;
     }
 }

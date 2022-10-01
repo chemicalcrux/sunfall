@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using Cinemachine;
 public class PivotController : MonoBehaviour
 {
@@ -13,12 +14,14 @@ public class PivotController : MonoBehaviour
     public Vector3 axis = new Vector3(1, 0, 0);
 
     public float collapseTimer = 10f;
-    
+
     private Transform holder;
 
     public CinemachineImpulseSource rumbleSource;
 
     public ObstacleSpawner obstacleSpawner;
+
+    private Dictionary<GameObject, float> obstacleKillTimes = new();
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +41,8 @@ public class PivotController : MonoBehaviour
 
     public void OnGUI()
     {
-        if (GUI.Button(new Rect(20, 20, 200, 100), "Collapse")) {
+        if (GUI.Button(new Rect(20, 20, 200, 100), "Collapse"))
+        {
             Collapse();
         }
     }
@@ -50,36 +54,68 @@ public class PivotController : MonoBehaviour
 
         collapseTimer -= Time.deltaTime;
 
-        if (collapseTimer <= 0) {
+        if (collapseTimer <= 3f)
+        {
+            CheckObstacles();
+        }
+        if (collapseTimer <= 0)
+        {
             Collapse();
         }
+
     }
 
     void CollapseWarning()
     {
-        if (collapseTimer < 3f) {
+        if (collapseTimer < 3f)
+        {
             float force = (3f - collapseTimer) * 10f;
             rumbleSource.GenerateImpulseWithForce(force);
         }
     }
+
+    void CheckObstacles()
+    {
+        List<GameObject> objects = obstacleKillTimes.Keys.ToList();
+        foreach (var obj in objects)
+        {
+            if (obstacleKillTimes[obj] >= collapseTimer)
+            {
+                KillObstacle(obj);
+                obstacleKillTimes.Remove(obj);
+            }
+
+        }
+    }
+
+    void KillObstacle(GameObject obstacle)
+    {
+        var flyAway = obstacle.AddComponent<FlyAway>();
+        flyAway.direction = (obstacle.transform.position - transform.position).normalized;
+        flyAway.lifetime = 3f;
+        flyAway.acceleration = 200f;
+        obstacle.transform.parent = null;
+    }
+
     public void Collapse()
     {
         radius -= 750f;
         ringTransform.localScale = new Vector3(500, radius, radius);
-        
-        for (int i = 0; i < holder.childCount; i++) {
+
+        for (int i = 0; i < holder.childCount; i++)
+        {
             var child = holder.GetChild(i).gameObject;
-            var flyAway = child.AddComponent<FlyAway>();
-            flyAway.direction = (child.transform.position - transform.position).normalized;
-            flyAway.lifetime = 3f;
-            flyAway.acceleration = 200f;
+            KillObstacle(child);
         }
 
         holder.DetachChildren();
 
         collapseTimer = 10f;
 
-        float offset = obstacleSpawner.SpawnCourse(0);
+        float offset = 1000;
+        offset = obstacleSpawner.SpawnCourse(offset);
+        offset = obstacleSpawner.SpawnCourse(offset);
+        offset = obstacleSpawner.SpawnCourse(offset);
         offset = obstacleSpawner.SpawnCourse(offset);
         offset = obstacleSpawner.SpawnCourse(offset);
         offset = obstacleSpawner.SpawnCourse(offset);
@@ -88,7 +124,7 @@ public class PivotController : MonoBehaviour
     public void Attach(Transform targetTransform, float distance, Vector3 position)
     {
         targetTransform.SetParent(holder);
-        
+
         float angle = 90f;
 
         // next up: angle from the object's Z position
@@ -110,5 +146,7 @@ public class PivotController : MonoBehaviour
 
         targetTransform.transform.position = offsetPos;
         targetTransform.transform.rotation = Quaternion.AngleAxis(90f - angle, axis);
+
+        obstacleKillTimes[targetTransform.gameObject] = UnityEngine.Random.Range(1.5f, 3f);
     }
 }

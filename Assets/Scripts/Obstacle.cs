@@ -3,7 +3,8 @@ using Cinemachine;
 using System.Collections.Generic;
 using System.Linq;
 public class Obstacle : MonoBehaviour {
-    public List<Collider> colliders;
+    public List<Collider> safeColliders;
+    public List<Collider> deadlyColliders;
     public CinemachineImpulseSource impulseSource;
     public AudioSource whooshSource;
 
@@ -16,9 +17,15 @@ public class Obstacle : MonoBehaviour {
             return;
 
         passed = true;
-        float distance = colliders.Select(collider => (collider.ClosestPoint(Camera.main.transform.position) - Camera.main.transform.position).magnitude).Min();
+        float distance = safeColliders.Select(collider => (collider.ClosestPoint(Camera.main.transform.position) - Camera.main.transform.position).magnitude).Min();
 
         impulseSource.GenerateImpulseWithForce(10f / distance);
         whooshSource.Play();
+    }
+
+    public void Kill()
+    {
+        safeColliders.ForEach(collider => collider.enabled = false);
+        deadlyColliders.ForEach(collider => collider.enabled = false);
     }
 }
