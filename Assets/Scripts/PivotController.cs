@@ -6,8 +6,9 @@ public class PivotController : MonoBehaviour
 {
     public float radius = 1000f;
 
-    [Range(-0.1f, 0.1f)]
-    public float angularSpeed = -0.01f;
+    [Range(0f, 1000f)]
+    public float linearSpeed = 10f;
+    float AngularSpeed => -linearSpeed / Mathf.PI / 2 / radius;
     public Vector3 axis = new Vector3(1, 0, 0);
 
     // Start is called before the first frame update
@@ -19,7 +20,7 @@ public class PivotController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.rotation *= Quaternion.AngleAxis(360f * Time.deltaTime * angularSpeed, axis);
+        transform.rotation *= Quaternion.AngleAxis(360f * Time.deltaTime * AngularSpeed, axis);
     }
 
     public void Attach(Transform targetTransform, float turnOffset)
