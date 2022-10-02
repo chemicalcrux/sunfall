@@ -14,9 +14,19 @@ public class GameDirector : MonoBehaviour
     public PivotController pivot;
     public GameStateHolder state;
 
+    private float deathTime;
+    
+    void OnGUI()
+    {
+        if (GUI.Button(new Rect(10, 150, 100, 50), "Respawn")) {
+            player.dead = false;
+        }
+    }
+
     void Awake()
     {
-        state.state = GameState.Playing;
+        state.state = GameState.Menu;
+        state.pivot = pivot;
     }
 
     // Start is called before the first frame update
@@ -31,7 +41,18 @@ public class GameDirector : MonoBehaviour
         if (state.state == GameState.Playing) {
             if (player.dead) {
                 state.state = GameState.Dead;
-                pivot.linearSpeed = 0f;
+                deathTime = Time.time;
+                pivot.DestroyAllObstacles();
+            }
+        }
+
+        if (state.state == GameState.Dead) {
+            if (Time.time - deathTime > 4f)
+                player.dead = false;
+            if (!player.dead) {
+                state.state = GameState.Menu;
+                pivot.radius = 40000f;
+                player.transform.position = Vector3.up * 40100f;
             }
         }
     }

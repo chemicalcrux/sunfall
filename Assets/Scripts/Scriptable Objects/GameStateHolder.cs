@@ -6,4 +6,5 @@ using UnityEngine;
 public class GameStateHolder : ScriptableObject
 {
     public GameState state;
+    public PivotController pivot;
 }

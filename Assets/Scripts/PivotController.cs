@@ -5,6 +5,7 @@ using System.Linq;
 using Cinemachine;
 public class PivotController : MonoBehaviour
 {
+    public GameStateHolder state;
     public float radius = 1000f;
     public Transform ringTransform;
     public Transform previewRingTransform;
@@ -45,6 +46,11 @@ public class PivotController : MonoBehaviour
         obstacleSpawner = GetComponent<ObstacleSpawner>();
     }
 
+    public void StartGame()
+    {
+        ConfigureRings();
+    }
+
     private void ConfigureRings()
     {
         ringTransform.localScale = new Vector3(500, radius, radius);
@@ -63,6 +69,9 @@ public class PivotController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (state.state != GameState.Playing)
+            return;
+
         transform.rotation *= Quaternion.AngleAxis(360f * Time.deltaTime * AngularSpeed, axis);
         collapseTimer -= Time.deltaTime;
 
@@ -76,8 +85,8 @@ public class PivotController : MonoBehaviour
         }
         cylinder.material.SetFloat("_Integrity", Mathf.Clamp01(collapseTimer / 2));
 
-        float t = Mathf.Clamp01(Mathf.InverseLerp(0, 10, Mathf.Pow(collapseTimer, 2f)));
-
+        float t = Mathf.Clamp01(Mathf.InverseLerp(0, 10, collapseTimer));
+        t = Mathf.Pow(t, 2);
         previewRingTransform.rotation = Quaternion.Slerp(nextLevelRotationStart, transform.rotation, 1 - t);
     }
 
@@ -97,15 +106,19 @@ public class PivotController : MonoBehaviour
         {
             if (obstacleKillTimes[obj] >= collapseTimer)
             {
-                obstacleKillTimes.Remove(obj);
                 KillObstacle(obj);
             }
-
         }
     }
 
     void KillObstacle(GameObject obstacle)
     {
+        obstacleKillTimes.Remove(obstacle);
+
+        // no idea why a single obstacle is leaking...
+
+        if (obstacle == null)
+            return;
         var flyAway = obstacle.AddComponent<FlyAway>();
         flyAway.direction = (obstacle.transform.position - transform.position).normalized;
         flyAway.lifetime = 3f;
@@ -114,22 +127,27 @@ public class PivotController : MonoBehaviour
         obstacle.GetComponent<Obstacle>().Kill();
     }
 
+    public void DestroyAllObstacles()
+    {
+        while (holder.childCount > 0)
+        {
+            KillObstacle(holder.GetChild(0).gameObject);
+        }
+    }
+
     public void Collapse()
     {
         radius -= 750f;
 
         ConfigureRings();
-        for (int i = 0; i < holder.childCount; i++)
-        {
-            var child = holder.GetChild(i).gameObject;
-            KillObstacle(child);
-            obstacleKillTimes.Remove(child);
-        }
-
-        holder.DetachChildren();
+        DestroyAllObstacles();
+        PrepareObstacles();
 
         collapseTimer = 10f;
+    }
 
+    public void PrepareObstacles()
+    {
         float offset = 1000;
         offset = obstacleSpawner.SpawnCourse(offset);
         offset = obstacleSpawner.SpawnCourse(offset);

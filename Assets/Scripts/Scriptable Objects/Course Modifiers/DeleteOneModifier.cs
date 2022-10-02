@@ -20,7 +20,6 @@ public class DeleteOneModifier : CourseModifier
         }
 
         int index = UnityEngine.Random.Range(0, targets.Count);
-        Debug.Log(index);
         Destroy(targets[index].gameObject);
     }
 }

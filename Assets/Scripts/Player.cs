@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
         Safe
     }
 
+    public GameStateHolder state;
     public PlayerSFX sfx;
     public PivotController pivot;
     public float speed = 5f;
@@ -48,6 +49,8 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (state.state != GameState.Playing)
+            return;
         Vector3 target = speed * Vector3.right * horizInput;
         float rate = 0f;
         // slowing down?
@@ -96,9 +99,6 @@ public class Player : MonoBehaviour
         heavyImpulse.GenerateImpulseWithForce(25f / distance);
     }
 
-    public CollisionKind CheckCollision(Collider other) {
-        
-    }
     public void OnTriggerEnter(Collider other) {
         if (LayerMask.NameToLayer("Obstacle") != other.gameObject.layer)
             return;
@@ -114,5 +114,6 @@ public class Player : MonoBehaviour
     public void Kill() {
         dead = true;
         sfx.Crash();
+        sfx.GameOverSlowdown();
     }
 }
