@@ -146,9 +146,11 @@ public class PivotController : MonoBehaviour
 
         Debug.Log(index);
         GameObject spawned = Instantiate(junk[index]);
-        spawned.GetComponent<FlyAway>().direction += UnityEngine.Random.onUnitSphere * 0.1f;
-        spawned.GetComponent<FlyAway>().speed += UnityEngine.Random.Range(-250, 250);
-        spawned.GetComponent<FlyAway>().acceleration += UnityEngine.Random.Range(-100, 100);
+        FlyAway fly = spawned.GetComponent<FlyAway>();
+        fly.direction += UnityEngine.Random.onUnitSphere * 0.1f;
+        fly.speed += UnityEngine.Random.Range(-250, 250);
+        fly.acceleration += UnityEngine.Random.Range(-100, 100);
+        fly.lifetime += UnityEngine.Random.Range(-1f, 1f);
         spawned.transform.position = Vector3.up * radius + offset;
     }
 

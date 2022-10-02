@@ -151,7 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   direction: {x: 0, y: -1, z: 0.5}
   acceleration: 500
-  lifetime: 5
+  lifetime: 3
   speed: 1000
 --- !u!73398921 &4569121001134106787
 VFXRenderer:
