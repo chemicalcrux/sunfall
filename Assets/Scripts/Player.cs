@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
 
     public GameStateHolder state;
     public PlayerSFX sfx;
+    public VisualEffect leftSparks;
+    public VisualEffect rightSparks;
+    public VisualEffect impactFX;
     public AudioSource flyingSound;
     public PivotController pivot;
     public float speed = 5f;
@@ -70,6 +73,17 @@ public class Player : MonoBehaviour
 
         float droneTone = 2 + Mathf.Abs(tilt) / 45;
         flyingSound.pitch = droneTone;
+
+        if (tilt >= 30f) {
+            leftSparks.SendEvent("Start");
+        } else {
+            leftSparks.SendEvent("Stop");
+        }
+        if (tilt <= -30f) {
+            rightSparks.SendEvent("Start");
+        } else {
+            rightSparks.SendEvent("Stop");
+        }
         if (Falling) {
             fallVelocity = Mathf.MoveTowards(fallVelocity, fallSpeed, Time.fixedDeltaTime * 25f);
         } else {
@@ -96,6 +110,7 @@ public class Player : MonoBehaviour
     {
         sfx.Slam();        
         heavyImpulse.GenerateImpulseWithVelocity(Vector3.down * impactSpeed);
+        impactFX.SendEvent("Start");
     }
 
     public void NearMiss(float distance)
