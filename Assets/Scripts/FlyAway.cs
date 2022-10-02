@@ -14,6 +14,18 @@ public class FlyAway : MonoBehaviour
     void Start()
     {
         renderer = GetComponentInChildren<MeshRenderer>();
+
+        Bobber bobber = GetComponentInChildren<Bobber>();
+
+        if (bobber != null) {
+            Destroy(bobber);
+        }
+
+        Spinner spinner = GetComponentInChildren<Spinner>();
+
+        if (spinner != null) {
+            Destroy(spinner);
+        }
     }
     void Update()
     {

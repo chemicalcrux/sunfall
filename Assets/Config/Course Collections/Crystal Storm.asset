@@ -10,10 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e50bb2d978c64b408d8f423ee7c960f, type: 3}
-  m_Name: Jagged Gauntlet
+  m_Name: Crystal Storm
   m_EditorClassIdentifier: 
-  label: JAGGED GAUNTLET
+  label: CRYSTAL STORM
   courses:
-  - {fileID: 2775561192636188488, guid: 8e630c766436b4cfe9c7cd43a732a03a, type: 3}
-  - {fileID: 2775561192636188488, guid: 037ea51c12fda42fb86e994fb8bb3f3b, type: 3}
-  linearSpeed: 1000
+  - {fileID: 2775561192636188488, guid: 40ba1d21bca55465883ba8055092d719, type: 3}
+  linearSpeed: 1200

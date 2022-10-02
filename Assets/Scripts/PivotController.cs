@@ -57,9 +57,12 @@ public class PivotController : MonoBehaviour
 
     public void SelectCourseSet()
     {
-        int index = UnityEngine.Random.Range(0, courseCollections.Count);
+        CourseCollection old = activeCollection;
+        do {
+            int index = UnityEngine.Random.Range(0, courseCollections.Count);
+            activeCollection = courseCollections[index];
+        } while(activeCollection == old);
 
-        activeCollection = courseCollections[index];
         cyclesLeft = 1; // UnityEngine.Random.Range(2, 5);
         linearSpeed = activeCollection.linearSpeed;
 
@@ -183,7 +186,8 @@ public class PivotController : MonoBehaviour
         flyAway.lifetime = 3f;
         flyAway.acceleration = 200f;
         obstacle.transform.parent = null;
-        obstacle.GetComponent<Obstacle>().Kill();
+        
+        obstacle.GetComponentsInChildren<Obstacle>().ToList().ForEach(x => x.Kill());
     }
 
     public void DestroyAllObstacles()

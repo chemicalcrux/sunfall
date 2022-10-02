@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e50bb2d978c64b408d8f423ee7c960f, type: 3}
-  m_Name: Intro
+  m_Name: Slalom
   m_EditorClassIdentifier: 
-  label: INTRODUCTION
+  label: SLALOM
   courses:
   - {fileID: 9047300576097956143, guid: 8c4d7c247ff75454099e2059b7612435, type: 3}
   - {fileID: 2775561192636188488, guid: e0983fb677da04a84b2d0ad7bb4d8d39, type: 3}
   - {fileID: 2775561192636188488, guid: 4271efeee7c4842f88e2b84b764780b4, type: 3}
-  linearSpeed: 800
+  linearSpeed: 1000

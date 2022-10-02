@@ -77,12 +77,12 @@ public class Player : MonoBehaviour
         float droneTone = 2 + Mathf.Abs(tilt) / 45;
         flyingSound.pitch = droneTone;
 
-        if (tilt >= 30f) {
+        if (tilt >= 20f) {
             leftSparks.SendEvent("Start");
         } else {
             leftSparks.SendEvent("Stop");
         }
-        if (tilt <= -30f) {
+        if (tilt <= -20f) {
             rightSparks.SendEvent("Start");
         } else {
             rightSparks.SendEvent("Stop");
