@@ -5,37 +5,36 @@ using UnityEngine.UI;
 using TMPro;
 public class CourseIndicator : MonoBehaviour
 {
+    public GameStateHolder state;
     Canvas canvas;
-    TMP_Text text;
+    public TMP_Text courseName;
+    public TMP_Text score;
     // Start is called before the first frame update
     void Start()
     {
         canvas = GetComponent<Canvas>();
-        text = GetComponentInChildren<TMP_Text>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        score.text = Mathf.Round(state.score).ToString();
     }
 
     public void FlashName(string name)
     {
-        text.text = name;
+        courseName.text = name;
         StartCoroutine(Flash());
     }
 
     IEnumerator Flash()
     {
         float start = Time.time;
-        canvas.enabled = true;
+        courseName.enabled = true;
 
-        while (Time.time - start < 1) {
+        while(state.player.Falling)
             yield return null;
-        }
-
-        canvas.enabled = false;
+        courseName.enabled = false;
 
         yield return null;
     }

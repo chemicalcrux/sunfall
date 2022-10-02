@@ -66,7 +66,6 @@ public class PivotController : MonoBehaviour
     public void StartGame()
     {
         ConfigureRings();
-        SelectCourseSet();
     }
 
     private void ConfigureRings()
@@ -92,6 +91,8 @@ public class PivotController : MonoBehaviour
 
         transform.rotation *= Quaternion.AngleAxis(360f * Time.deltaTime * AngularSpeed, axis);
         collapseTimer -= Time.deltaTime;
+
+        state.score += linearSpeed * Time.deltaTime;
 
         if (collapseTimer <= 3f)
         {
@@ -166,6 +167,12 @@ public class PivotController : MonoBehaviour
 
     public void PrepareObstacles()
     {
+        --cyclesLeft;
+
+        if (cyclesLeft <= 0) {
+            SelectCourseSet();
+        }
+
         float offset = 1000;
         offset = obstacleSpawner.SpawnCourse(activeCollection, offset);
         offset = obstacleSpawner.SpawnCourse(activeCollection, offset);
@@ -173,12 +180,6 @@ public class PivotController : MonoBehaviour
         offset = obstacleSpawner.SpawnCourse(activeCollection, offset);
         offset = obstacleSpawner.SpawnCourse(activeCollection, offset);
         offset = obstacleSpawner.SpawnCourse(activeCollection, offset);
-
-        --cyclesLeft;
-
-        if (cyclesLeft == 0) {
-            SelectCourseSet();
-        }
     }
 
     public void Attach(Transform targetTransform, float distance, Vector3 position)

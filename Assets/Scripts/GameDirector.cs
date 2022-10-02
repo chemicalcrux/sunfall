@@ -28,6 +28,7 @@ public class GameDirector : MonoBehaviour
         state.score = 0;
         state.state = GameState.Menu;
         state.pivot = pivot;
+        state.player = player;
     }
 
     // Start is called before the first frame update
