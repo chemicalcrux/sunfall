@@ -31,6 +31,7 @@ public class ObstacleSpawner : MonoBehaviour
         int repetitions = UnityEngine.Random.Range(course.repetitions.x, course.repetitions.y + 1);
         for (int copy = 0; copy < repetitions; copy++) {
             var obj = Instantiate(course);
+            obj.GetComponent<Course>().Prepare();
 
             offset += course.frontBuffer;
 

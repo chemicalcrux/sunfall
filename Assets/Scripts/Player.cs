@@ -7,6 +7,11 @@ using UnityEngine.VFX;
 
 public class Player : MonoBehaviour
 {
+    public enum CollisionKind {
+        Deadly,
+        Safe
+    }
+
     public PlayerSFX sfx;
     public PivotController pivot;
     public float speed = 5f;
@@ -91,6 +96,9 @@ public class Player : MonoBehaviour
         heavyImpulse.GenerateImpulseWithForce(25f / distance);
     }
 
+    public CollisionKind CheckCollision(Collider other) {
+        
+    }
     public void OnTriggerEnter(Collider other) {
         if (LayerMask.NameToLayer("Obstacle") != other.gameObject.layer)
             return;
