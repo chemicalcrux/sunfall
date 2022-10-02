@@ -48,8 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lower: {x: 0, y: 0, z: 0}
-  upper: {x: 0, y: 250, z: 0}
-  period: 5
+  upper: {x: 0, y: 100, z: 0}
+  period: 3
 --- !u!114 &1100445586898346619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   axis: {x: 0, y: 1, z: 0}
-  turnsPerSecond: 1
+  turnsPerSecond: 3
 --- !u!1 &4047486086904572812
 GameObject:
   m_ObjectHideFlags: 0
@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 1740872739524685920}
   - component: {fileID: 1122567186102988709}
   m_Layer: 0
-  m_Name: Crystal
+  m_Name: Small Crystal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -308,7 +308,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 75, y: 200, z: 75}
+  m_Size: {x: 45, y: 100, z: 45}
   m_Center: {x: 0, y: -0.05, z: 0}
 --- !u!1001 &6668633380520906156
 PrefabInstance:
@@ -325,17 +325,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 9793593417049421980fe8ae602b38f4,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 50
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9793593417049421980fe8ae602b38f4,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 50
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9793593417049421980fe8ae602b38f4,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 50
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9793593417049421980fe8ae602b38f4,
         type: 3}

@@ -140,7 +140,7 @@ public class PivotController : MonoBehaviour
             case 2: offset2 += new Vector2(500, 0); break;
             default: break;
         }
-        Vector3 offset = new Vector3(offset2.x, 2500, offset2.y - 250);
+        Vector3 offset = new Vector3(offset2.x, 2500, offset2.y - 750);
 
         int index = UnityEngine.Random.Range(0, junk.Count);
 
@@ -149,7 +149,7 @@ public class PivotController : MonoBehaviour
         spawned.GetComponent<FlyAway>().direction += UnityEngine.Random.onUnitSphere * 0.1f;
         spawned.GetComponent<FlyAway>().speed += UnityEngine.Random.Range(-250, 250);
         spawned.GetComponent<FlyAway>().acceleration += UnityEngine.Random.Range(-100, 100);
-        spawned.transform.position = state.player.transform.position + offset;
+        spawned.transform.position = Vector3.up * radius + offset;
     }
 
     void CollapseWarning()

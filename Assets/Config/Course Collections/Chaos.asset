@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e50bb2d978c64b408d8f423ee7c960f, type: 3}
+  m_Name: Chaos
+  m_EditorClassIdentifier: 
+  label: CHAOS
+  courses:
+  - {fileID: 2775561192636188488, guid: a1974293a0ccc4fe3b50124bcc76c58b, type: 3}
+  - {fileID: 2775561192636188488, guid: 40ba1d21bca55465883ba8055092d719, type: 3}
+  - {fileID: 2775561192636188488, guid: e0983fb677da04a84b2d0ad7bb4d8d39, type: 3}
+  - {fileID: 2775561192636188488, guid: 4271efeee7c4842f88e2b84b764780b4, type: 3}
+  - {fileID: 9047300576097956143, guid: 8c4d7c247ff75454099e2059b7612435, type: 3}
+  - {fileID: 2775561192636188488, guid: 8e630c766436b4cfe9c7cd43a732a03a, type: 3}
+  - {fileID: 2775561192636188488, guid: 037ea51c12fda42fb86e994fb8bb3f3b, type: 3}
+  - {fileID: 2775561192636188488, guid: 1488831a9344c47c6a8707f9fe059b00, type: 3}
+  linearSpeed: 1200

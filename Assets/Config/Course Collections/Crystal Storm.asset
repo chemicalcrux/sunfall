@@ -15,4 +15,5 @@ MonoBehaviour:
   label: CRYSTAL STORM
   courses:
   - {fileID: 2775561192636188488, guid: 40ba1d21bca55465883ba8055092d719, type: 3}
+  - {fileID: 2775561192636188488, guid: a1974293a0ccc4fe3b50124bcc76c58b, type: 3}
   linearSpeed: 1200
