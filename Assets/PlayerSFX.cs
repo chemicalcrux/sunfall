@@ -6,6 +6,7 @@ public class PlayerSFX : MonoBehaviour
 {
     private AudioSource source;
     public AudioClip slam;
+    public AudioClip bonk;
     public AudioClip crash;
     public AudioClip gameOverSlowdown;
     // Start is called before the first frame update
@@ -23,18 +24,28 @@ public class PlayerSFX : MonoBehaviour
     public void Slam()
     {
         source.spatialBlend = 1f;
+        source.volume = 0.5f;
         source.PlayOneShot(slam);
+    }
+
+    public void Bonk()
+    {
+        source.spatialBlend = 1f;
+        source.volume = 1f;
+        source.PlayOneShot(bonk);
     }
 
     public void Crash()
     {
         source.spatialBlend = 1f;
+        source.volume = 1f;
         source.PlayOneShot(crash);
     }
 
     public void GameOverSlowdown()
     {
         source.spatialBlend = 0f;
+        source.volume = 1f;
         source.PlayOneShot(gameOverSlowdown);
     }
 }

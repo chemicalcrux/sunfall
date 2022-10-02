@@ -11,6 +11,8 @@ public class PivotController : MonoBehaviour
     public Transform ringTransform;
     public Transform previewRingTransform;
 
+    public AudioSource rumbleAudio;
+
     [Range(0f, 2000f)]
     public float linearSpeed = 10f;
     float AngularSpeed => -linearSpeed / Mathf.PI / 2 / radius;
@@ -102,6 +104,15 @@ public class PivotController : MonoBehaviour
         {
             Collapse();
         }
+
+        float time = state.pivot.collapseTimer;
+
+        float t1 = Mathf.Clamp01(Mathf.InverseLerp(3, 0, time));
+        float t2 = Mathf.Clamp01(Mathf.InverseLerp(9, 10, time));
+
+        time = Mathf.Max(t1, t2);
+
+        rumbleAudio.volume = time * 0.5f;
         cylinder.material.SetFloat("_Integrity", Mathf.Clamp01(collapseTimer / 2));
 
         float t = Mathf.Clamp01(Mathf.InverseLerp(0, 10, collapseTimer));

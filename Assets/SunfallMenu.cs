@@ -19,6 +19,7 @@ public class SunfallMenu : MonoBehaviour
 
     public TMP_Dropdown postProcessDropdown;
     public TMP_Dropdown dynamicResolutionDropdown;
+    public Slider musicVolumeSlider;
 
     private float alphaVelocity;
 
@@ -31,6 +32,9 @@ public class SunfallMenu : MonoBehaviour
         if (!PlayerPrefs.HasKey("Dynamic Resolution")) {
             PlayerPrefs.SetInt("Dynamic Resolution", 0);
         }
+        if (!PlayerPrefs.HasKey("Music Volume")) {
+            PlayerPrefs.SetFloat("Music Volume", 0.5f);
+        }
 
         postProcessDropdown.onValueChanged.AddListener((choice) => {
             PlayerPrefs.SetInt("Post Processing", choice);
@@ -38,8 +42,13 @@ public class SunfallMenu : MonoBehaviour
         dynamicResolutionDropdown.onValueChanged.AddListener((choice) => {
             PlayerPrefs.SetInt("Dynamic Resolution", choice);
         });
+        musicVolumeSlider.onValueChanged.AddListener((value) => {
+            PlayerPrefs.SetFloat("Music Volume", value);
+        });
+
         postProcessDropdown.SetValueWithoutNotify(PlayerPrefs.GetInt("Post Processing"));
         dynamicResolutionDropdown.SetValueWithoutNotify(PlayerPrefs.GetInt("Dynamic Resolution"));
+        musicVolumeSlider.SetValueWithoutNotify(PlayerPrefs.GetFloat("Music Volume"));
     }
 
     // Update is called once per frame

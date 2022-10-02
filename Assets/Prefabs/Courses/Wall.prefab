@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frontBuffer: 1250
   backBuffer: 250
-  horizontalLimits: {x: 0, y: 0}
+  horizontalLimits: {x: -100, y: 100}
   repetitions: {x: 1, y: 1}
   modifiers:
   - {fileID: 11400000, guid: b59a7e49fddb74c4eb280924b15c72f4, type: 2}

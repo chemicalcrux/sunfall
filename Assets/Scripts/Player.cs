@@ -53,6 +53,9 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (Height < GoalHeight) {
+            transform.position += Vector3.up * (GoalHeight - Height);
+        }
         flyingSound.volume = state.state == GameState.Playing ? 0.25f : 0f;
         if (state.state != GameState.Playing)
             return;
@@ -88,7 +91,7 @@ public class Player : MonoBehaviour
             fallVelocity = Mathf.MoveTowards(fallVelocity, fallSpeed, Time.fixedDeltaTime * 25f);
         } else {
             if (fallVelocity > 0) {
-                Impact(fallVelocity);
+                Impact(Mathf.Clamp(fallVelocity, 0, 10));
             }
             fallVelocity = 0f;
         }
@@ -122,13 +125,14 @@ public class Player : MonoBehaviour
         if (LayerMask.NameToLayer("Obstacle") != other.gameObject.layer)
             return;
             
-        if (Physics.SphereCast(transform.position, 5f, transform.forward, out RaycastHit hit, 10f, LayerMask.GetMask("Obstacle"), QueryTriggerInteraction.Collide))
+        if (Physics.SphereCast(transform.position, 5f, transform.forward, out RaycastHit hit, 20f, LayerMask.GetMask("Obstacle"), QueryTriggerInteraction.Collide))
         {
             Debug.Log(hit);
         } 
         else
         {
             velocity.Scale(Vector3.left);
+            sfx.Bonk();
             return;
         }
         Obstacle obstacle = other.gameObject.GetComponentInParent<Obstacle>();
