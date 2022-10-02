@@ -6,7 +6,7 @@ public class FlyAway : MonoBehaviour
     public float acceleration = 1f;
     public float lifetime = 3f;
 
-    private float speed = 100f;
+    public float speed = 100f;
 
     private Quaternion rotationSpeed = Quaternion.identity;
     private new MeshRenderer renderer;

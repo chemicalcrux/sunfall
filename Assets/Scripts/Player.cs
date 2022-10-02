@@ -125,7 +125,7 @@ public class Player : MonoBehaviour
         if (LayerMask.NameToLayer("Obstacle") != other.gameObject.layer)
             return;
             
-        if (Physics.SphereCast(transform.position, 5f, transform.forward, out RaycastHit hit, 20f, LayerMask.GetMask("Obstacle"), QueryTriggerInteraction.Collide))
+        if (Physics.SphereCast(transform.position, 7.5f, transform.forward, out RaycastHit hit, 20f, LayerMask.GetMask("Obstacle"), QueryTriggerInteraction.Collide))
         {
             Debug.Log(hit);
         } 

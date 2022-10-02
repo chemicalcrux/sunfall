@@ -36,6 +36,7 @@ public class PivotController : MonoBehaviour
     private CourseCollection activeCollection;
 
     public List<CourseCollection> courseCollections;
+    public List<GameObject> junk;
 
     // Start is called before the first frame update
     void Start()
@@ -118,6 +119,34 @@ public class PivotController : MonoBehaviour
         float t = Mathf.Clamp01(Mathf.InverseLerp(0, 10, collapseTimer));
         t = Mathf.Pow(t, 2);
         previewRingTransform.rotation = Quaternion.Slerp(nextLevelRotationStart, transform.rotation, 1 - t);
+    
+        if (UnityEngine.Random.Range(0f, 1f) < 0.01f * collapseTimer) {
+            SpawnJunk();
+        }
+    }
+
+    void SpawnJunk()
+    {
+        Vector2 offset2 = UnityEngine.Random.insideUnitCircle * 500;
+
+        int randomPos = UnityEngine.Random.Range(0, 3);
+
+        switch (randomPos) {
+            case 0: offset2 += new Vector2(-500, 0); break;
+            case 1: offset2 += new Vector2(0, 500); break;
+            case 2: offset2 += new Vector2(500, 0); break;
+            default: break;
+        }
+        Vector3 offset = new Vector3(offset2.x, 2500, offset2.y - 250);
+
+        int index = UnityEngine.Random.Range(0, junk.Count);
+
+        Debug.Log(index);
+        GameObject spawned = Instantiate(junk[index]);
+        spawned.GetComponent<FlyAway>().direction += UnityEngine.Random.onUnitSphere * 0.1f;
+        spawned.GetComponent<FlyAway>().speed += UnityEngine.Random.Range(-250, 250);
+        spawned.GetComponent<FlyAway>().acceleration += UnityEngine.Random.Range(-100, 100);
+        spawned.transform.position = state.player.transform.position + offset;
     }
 
     void CollapseWarning()

@@ -32,7 +32,6 @@ public class DynamicResolution : MonoBehaviour
         runningAverage *= 0.99f;
         runningAverage += 0.01f * Time.deltaTime;
 
-        Debug.Log(Time.deltaTime);
         float target = runningAverage < 1 / targetFPS ? 1f : 0.25f;
         currentFactor = Mathf.SmoothDamp(currentFactor, target, ref resolutionVelocity, 5f);
         return currentFactor;
