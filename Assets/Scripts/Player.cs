@@ -102,7 +102,16 @@ public class Player : MonoBehaviour
     public void OnTriggerEnter(Collider other) {
         if (LayerMask.NameToLayer("Obstacle") != other.gameObject.layer)
             return;
-
+            
+        if (Physics.SphereCast(transform.position, 5f, transform.forward, out RaycastHit hit, 10f, LayerMask.GetMask("Obstacle"), QueryTriggerInteraction.Collide))
+        {
+            Debug.Log(hit);
+        } 
+        else
+        {
+            velocity.Scale(Vector3.left);
+            return;
+        }
         Obstacle obstacle = other.gameObject.GetComponentInParent<Obstacle>();
         
         if (obstacle == null)
