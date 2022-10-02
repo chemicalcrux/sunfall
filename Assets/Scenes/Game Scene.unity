@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 4.9504814, g: 1.9790802, b: 2.3086262, a: 1}
+  m_IndirectSpecularColor: {r: 4.9158916, g: 1.923439, b: 2.2207184, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -186,6 +186,7 @@ MonoBehaviour:
   courseCollections:
   - {fileID: 11400000, guid: 13451d9c5f83d4d0e921acc192730f76, type: 2}
   - {fileID: 11400000, guid: b3d54f1f356ad48df84cfb4fd428cdc5, type: 2}
+  - {fileID: 11400000, guid: af5007a13bb634efea3c7d75e909f73b, type: 2}
 --- !u!114 &1723664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2557,6 +2558,7 @@ MonoBehaviour:
   sfx: {fileID: 723783791}
   leftSparks: {fileID: 232357071}
   rightSparks: {fileID: 942458821}
+  impactFX: {fileID: 283367428}
   flyingSound: {fileID: 992075295}
   pivot: {fileID: 1723663}
   speed: 20

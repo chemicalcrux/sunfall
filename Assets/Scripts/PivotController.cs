@@ -173,13 +173,10 @@ public class PivotController : MonoBehaviour
             SelectCourseSet();
         }
 
-        float offset = 1000;
-        offset = obstacleSpawner.SpawnCourse(activeCollection, offset);
-        offset = obstacleSpawner.SpawnCourse(activeCollection, offset);
-        offset = obstacleSpawner.SpawnCourse(activeCollection, offset);
-        offset = obstacleSpawner.SpawnCourse(activeCollection, offset);
-        offset = obstacleSpawner.SpawnCourse(activeCollection, offset);
-        offset = obstacleSpawner.SpawnCourse(activeCollection, offset);
+        float offset = 1500;
+
+        while (offset < 1500 + linearSpeed * 10)
+            offset = obstacleSpawner.SpawnCourse(activeCollection, offset);
     }
 
     public void Attach(Transform targetTransform, float distance, Vector3 position)
