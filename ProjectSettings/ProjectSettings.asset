@@ -134,8 +134,11 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 2022-10-02-3215
+  bundleVersion: 2022-10-02-4253
   preloadedAssets:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -170,11 +173,11 @@ PlayerSettings:
   applicationIdentifier:
     Standalone: com.UnityTechnologies.com.unity.template.hdrp-blank
   buildNumber:
-    Standalone: 5
-    iPhone: 5
+    Standalone: 6
+    iPhone: 6
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
-  AndroidBundleVersionCode: 6
+  AndroidBundleVersionCode: 7
   AndroidMinSdkVersion: 22
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
