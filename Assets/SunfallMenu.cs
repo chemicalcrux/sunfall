@@ -18,6 +18,7 @@ public class SunfallMenu : MonoBehaviour
     public CinemachineVirtualCamera mainMenuCam;
 
     public TMP_Dropdown postProcessDropdown;
+    public TMP_Dropdown dynamicResolutionDropdown;
 
     private float alphaVelocity;
 
@@ -27,11 +28,18 @@ public class SunfallMenu : MonoBehaviour
         if (!PlayerPrefs.HasKey("Post Processing")) {
             PlayerPrefs.SetInt("Post Processing", 2);
         }
+        if (!PlayerPrefs.HasKey("Dynamic Resolution")) {
+            PlayerPrefs.SetInt("Dynamic Resolution", 0);
+        }
 
         postProcessDropdown.onValueChanged.AddListener((choice) => {
             PlayerPrefs.SetInt("Post Processing", choice);
         });
+        dynamicResolutionDropdown.onValueChanged.AddListener((choice) => {
+            PlayerPrefs.SetInt("Dynamic Resolution", choice);
+        });
         postProcessDropdown.SetValueWithoutNotify(PlayerPrefs.GetInt("Post Processing"));
+        dynamicResolutionDropdown.SetValueWithoutNotify(PlayerPrefs.GetInt("Dynamic Resolution"));
     }
 
     // Update is called once per frame
@@ -56,5 +64,16 @@ public class SunfallMenu : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
+    }
+    
+    public static float VFXFactor()
+    {
+        switch(PlayerPrefs.GetInt("Post Processing")) {
+            case 0: return 0f;
+            case 1: return 0.5f;
+            case 2: return 1f;
+            case 3: return 2f;
+            default: return 0f;
+        }
     }
 }

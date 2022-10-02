@@ -23,7 +23,7 @@ public class CollapseVFX : MonoBehaviour
 
         t = Mathf.Max(t1, t2);
 
-        volume.weight = t;
+        volume.weight = t * SunfallMenu.VFXFactor();
 
         if (state.state != GameState.Playing)
             volume.weight = 0;

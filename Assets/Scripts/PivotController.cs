@@ -57,7 +57,7 @@ public class PivotController : MonoBehaviour
         int index = UnityEngine.Random.Range(0, courseCollections.Count);
 
         activeCollection = courseCollections[index];
-        cyclesLeft = UnityEngine.Random.Range(2, 5);
+        cyclesLeft = 1; // UnityEngine.Random.Range(2, 5);
         linearSpeed = activeCollection.linearSpeed;
 
         courseIndicator.FlashName(activeCollection.label);

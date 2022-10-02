@@ -26,6 +26,6 @@ public class VFXController : MonoBehaviour
         float newTarget = Mathf.Log10(offset.magnitude * 100 + 1) / 2;
 
         target = Mathf.SmoothDamp(target, newTarget, ref velocity, 0.1f);
-        volume.weight = target;
+        volume.weight = target * SunfallMenu.VFXFactor();
     }
 }
