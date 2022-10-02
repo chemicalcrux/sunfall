@@ -7,4 +7,5 @@ public class CourseCollection : ScriptableObject
 {
     public string label;
     public List<Course> courses;
+    public float linearSpeed;
 }

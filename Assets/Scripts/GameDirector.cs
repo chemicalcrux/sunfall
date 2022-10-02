@@ -25,6 +25,7 @@ public class GameDirector : MonoBehaviour
 
     void Awake()
     {
+        state.score = 0;
         state.state = GameState.Menu;
         state.pivot = pivot;
     }

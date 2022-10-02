@@ -49,8 +49,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c68089fa5172c4ba4bcca080ee989778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frontBuffer: 500
-  backBuffer: 500
+  frontBuffer: 1250
+  backBuffer: 250
   horizontalLimits: {x: 0, y: 0}
   repetitions: {x: 1, y: 1}
   modifiers:

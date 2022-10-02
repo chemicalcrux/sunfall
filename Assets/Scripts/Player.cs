@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
 
     public GameStateHolder state;
     public PlayerSFX sfx;
+    public AudioSource flyingSound;
     public PivotController pivot;
     public float speed = 5f;
     public float accel = 0.5f;
@@ -49,6 +50,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        flyingSound.volume = state.state == GameState.Playing ? 0.25f : 0f;
         if (state.state != GameState.Playing)
             return;
         Vector3 target = speed * Vector3.right * horizInput;
@@ -62,12 +64,14 @@ public class Player : MonoBehaviour
         
         velocity = Vector3.MoveTowards(velocity, target, rate);
 
-        float tilt = -45f * MathfExt.Logistic(velocity.x / speed, 1f);
+        float tilt = -45f * MathfExt.Logistic(velocity.x / speed, 2f);
 
         transform.rotation = Quaternion.AngleAxis(tilt, Vector3.forward);
 
+        float droneTone = 2 + Mathf.Abs(tilt) / 45;
+        flyingSound.pitch = droneTone;
         if (Falling) {
-            fallVelocity = Mathf.MoveTowards(fallVelocity, fallSpeed, Time.deltaTime * 25f);
+            fallVelocity = Mathf.MoveTowards(fallVelocity, fallSpeed, Time.fixedDeltaTime * 25f);
         } else {
             if (fallVelocity > 0) {
                 Impact(fallVelocity);

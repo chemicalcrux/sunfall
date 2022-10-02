@@ -7,8 +7,6 @@ public class ObstacleSpawner : MonoBehaviour
 {
     private PivotController pivot;
 
-    public CourseCollection courseSet;
-
     [Range (0f, 1f)]
     public float obstacleOffset = 0.2f;
     // Start is called before the first frame update
@@ -24,7 +22,7 @@ public class ObstacleSpawner : MonoBehaviour
     }
     
     // Returns the amount of space taken up
-    public float SpawnCourse(float offset)
+    public float SpawnCourse(CourseCollection courseSet, float offset)
     {
         int index = UnityEngine.Random.Range(0, courseSet.courses.Count);
         var course = courseSet.courses[index];

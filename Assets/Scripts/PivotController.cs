@@ -6,11 +6,12 @@ using Cinemachine;
 public class PivotController : MonoBehaviour
 {
     public GameStateHolder state;
+    public CourseIndicator courseIndicator;
     public float radius = 1000f;
     public Transform ringTransform;
     public Transform previewRingTransform;
 
-    [Range(0f, 1000f)]
+    [Range(0f, 2000f)]
     public float linearSpeed = 10f;
     float AngularSpeed => -linearSpeed / Mathf.PI / 2 / radius;
     public Vector3 axis = new Vector3(1, 0, 0);
@@ -29,6 +30,11 @@ public class PivotController : MonoBehaviour
 
     private Quaternion nextLevelRotationStart;
 
+    public int cyclesLeft;
+    private CourseCollection activeCollection;
+
+    public List<CourseCollection> courseCollections;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,9 +52,21 @@ public class PivotController : MonoBehaviour
         obstacleSpawner = GetComponent<ObstacleSpawner>();
     }
 
+    public void SelectCourseSet()
+    {
+        int index = UnityEngine.Random.Range(0, courseCollections.Count);
+
+        activeCollection = courseCollections[index];
+        cyclesLeft = UnityEngine.Random.Range(2, 5);
+        linearSpeed = activeCollection.linearSpeed;
+
+        courseIndicator.FlashName(activeCollection.label);
+    }
+
     public void StartGame()
     {
         ConfigureRings();
+        SelectCourseSet();
     }
 
     private void ConfigureRings()
@@ -149,12 +167,18 @@ public class PivotController : MonoBehaviour
     public void PrepareObstacles()
     {
         float offset = 1000;
-        offset = obstacleSpawner.SpawnCourse(offset);
-        offset = obstacleSpawner.SpawnCourse(offset);
-        offset = obstacleSpawner.SpawnCourse(offset);
-        offset = obstacleSpawner.SpawnCourse(offset);
-        offset = obstacleSpawner.SpawnCourse(offset);
-        offset = obstacleSpawner.SpawnCourse(offset);
+        offset = obstacleSpawner.SpawnCourse(activeCollection, offset);
+        offset = obstacleSpawner.SpawnCourse(activeCollection, offset);
+        offset = obstacleSpawner.SpawnCourse(activeCollection, offset);
+        offset = obstacleSpawner.SpawnCourse(activeCollection, offset);
+        offset = obstacleSpawner.SpawnCourse(activeCollection, offset);
+        offset = obstacleSpawner.SpawnCourse(activeCollection, offset);
+
+        --cyclesLeft;
+
+        if (cyclesLeft == 0) {
+            SelectCourseSet();
+        }
     }
 
     public void Attach(Transform targetTransform, float distance, Vector3 position)
