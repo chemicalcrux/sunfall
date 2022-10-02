@@ -48,7 +48,7 @@ MonoBehaviour:
   frontBuffer: 250
   backBuffer: 250
   horizontalLimits: {x: -300, y: 300}
-  repetitions: {x: 1, y: 1}
+  repetitions: {x: 2, y: 5}
   modifiers:
   - {fileID: 11400000, guid: 4451144b1d663430f8f777c2ff8931d8, type: 2}
 --- !u!1001 &9063219685713997083

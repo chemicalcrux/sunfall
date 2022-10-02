@@ -18,9 +18,9 @@ public class GameDirector : MonoBehaviour
     
     void OnGUI()
     {
-        if (GUI.Button(new Rect(10, 150, 100, 50), "Respawn")) {
-            player.dead = false;
-        }
+        // if (GUI.Button(new Rect(10, 150, 100, 50), "Respawn")) {
+        //     player.dead = false;
+        // }
     }
 
     void Awake()

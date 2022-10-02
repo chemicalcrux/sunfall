@@ -80,7 +80,7 @@ MonoBehaviour:
   frontBuffer: 250
   backBuffer: 250
   horizontalLimits: {x: -50, y: 50}
-  repetitions: {x: 3, y: 5}
+  repetitions: {x: 2, y: 4}
   modifiers: []
 --- !u!1 &5257244681052985268
 GameObject:

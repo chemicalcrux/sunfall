@@ -33,8 +33,8 @@ public class DynamicResolution : MonoBehaviour
         runningAverage += 0.01f * Time.deltaTime;
 
         float target = runningAverage < 1 / targetFPS ? 1f : 0.25f;
-        currentFactor = Mathf.SmoothDamp(currentFactor, target, ref resolutionVelocity, 5f);
-        return currentFactor;
+        currentFactor = Mathf.SmoothDamp(currentFactor, target, ref resolutionVelocity, 1f);
+        return Mathf.Round(25 * currentFactor) / 25;
     }
 
 }

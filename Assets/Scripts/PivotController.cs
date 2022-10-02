@@ -83,10 +83,10 @@ public class PivotController : MonoBehaviour
 
     public void OnGUI()
     {
-        if (GUI.Button(new Rect(20, 20, 200, 100), "Collapse"))
-        {
-            Collapse();
-        }
+        // if (GUI.Button(new Rect(20, 20, 200, 100), "Collapse"))
+        // {
+        //     Collapse();
+        // }
     }
 
     // Update is called once per frame
@@ -140,7 +140,7 @@ public class PivotController : MonoBehaviour
             case 2: offset2 += new Vector2(500, 0); break;
             default: break;
         }
-        Vector3 offset = new Vector3(offset2.x, 2500, offset2.y - 750);
+        Vector3 offset = new Vector3(offset2.x, 2500, offset2.y - 450);
 
         int index = UnityEngine.Random.Range(0, junk.Count);
 

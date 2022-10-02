@@ -56,7 +56,7 @@ public class SunfallMenu : MonoBehaviour
     {
         transform.position = Vector3.up * (state.pivot.radius + 100);
         float targetAlpha = state.state == GameState.Menu ? 1f : 0f;
-        canvasGroup.alpha = Mathf.SmoothDamp(canvasGroup.alpha, targetAlpha, ref alphaVelocity, 1.0f);
+        canvasGroup.alpha = Mathf.SmoothDamp(canvasGroup.alpha, targetAlpha, ref alphaVelocity, 0.1f);
 
         mainMenuCam.enabled = false;
 
@@ -68,6 +68,7 @@ public class SunfallMenu : MonoBehaviour
     {
         state.pivot.StartGame();
         state.state = GameState.Playing;
+        state.score = 0;
     }
 
     public void Quit()
