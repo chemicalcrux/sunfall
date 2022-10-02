@@ -102,6 +102,11 @@ public class Player : MonoBehaviour
             transform.position += Vector3.up * (GoalHeight - Height);
         }
 
+        if (Mathf.Abs(transform.position.x) >= 525) {
+            velocity.Scale(Vector3.left);
+            sfx.Bonk();
+        }
+
     }
 
     public void Horizontal(InputAction.CallbackContext context)
